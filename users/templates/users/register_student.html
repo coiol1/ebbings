@@ -1,0 +1,20 @@
+<h1>Users registration page</h1>
+
+<form action="/users/register_student/check/" method="POST">
+    {% csrf_token %}
+    <h2>
+        First name
+        <input type='text' name='first_name' required><br>
+        Last name
+        <input type='text' name='last_name' required><br>
+        Student number
+        <input type='text' name='student_id' required><br>
+        Email address
+        <input type='email' name='email' required><br>
+        Username
+        <input type='text' name='username' required><br>
+        Password
+        <input type='password' name='password' required><br>
+        <input type='submit' name='button' value='Create new user'>
+    </h2>
+</form>

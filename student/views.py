@@ -1,5 +1,5 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render
 
 # Create your views here.
 def index(request):
-    return HttpResponse('<h1>Student</h1>')
+    return render(request, 'student/index.html', {})
