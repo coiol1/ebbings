@@ -5,13 +5,14 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     teacher_id = models.CharField(max_length = 64) #register as teacher then choose a teacher_id, that will be the url students use to sign up for classes
+    ###extension### teacher_id is built from first_name and last_name, with number added if not unique
     student_id = models.CharField(max_length = 64) #if registering as student, need to enter student_id (edX uses the username)
 
     def __unicode__(self):
         return self.user.username
 
 class Deck(models.Model):
-    name = models.CharField(max_length = 256)
+    name = models.CharField(max_length = 256, unique = True)
 
     def __unicode__(self):
         return self.name
@@ -46,7 +47,10 @@ class GroupDeck(models.Model):
 
 class Card(models.Model):
     front = models.TextField()
+    front_additional = models.TextField(null = True)
     back = models.TextField()
+    back_additional = models.TextField(null = True)
+    example = models.TextField(null = True)
     deck = models.ForeignKey(Deck)
     students = models.ManyToManyField(User, through = 'StudentCard')
 
