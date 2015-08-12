@@ -1,28 +1,52 @@
-<h1>Create a new class</h1>
-
+{% load staticfiles %}
+<script type="text/javascript" src="{% static "jquery-2.1.4.min.js" %}"></script>
+<script type="text/javascript" src="{% static "moment.min.js" %}"></script>
 <script type="text/javascript">
 function validateForm() {
     var totalWeight = 0;
-    for (var i = 0; i < document.getElementsByClassName("weight").length; i++) {
-        if (isNaN(parseInt(document.getElementsByClassName("weight")[i].value)) === false) {
-            totalWeight += parseInt(document.getElementsByClassName("weight")[i].value);
+    var anyChecked = false;
+    for (var i = 0; i < $('.check').length; i++) {
+        if ($('.check')[i].checked) {
+            anyChecked = true;
+            if (moment($('.deadline')[i].value).isBetween(moment(), moment().add(1, 'y'))) {   
+                if (isNaN(parseInt($('.weight')[i].value)) === false) {
+                    totalWeight += parseInt($('.weight')[i].value);
+                }
+                else {
+                    alert("Weights must be assigned to all selected decks");
+                    return false;
+                }
+            }
+            else {
+                alert("Deadlines must be set within the range " + moment().format('YYYY-MM-DD, HH:mm') + " to " + moment().add(1, 'y').format('YYYY-MM-DD, HH:mm'));
+                return false;
+            }
         }
     }
+    if (anyChecked === false) {
+        alert("You must select at least one deck");
+        return false;
+    }
     if (totalWeight != 100) {
-        alert("Weights must add up to 100")
+        alert("Weights of selected decks must add up to 100");
         return false;
     }
 }
 </script>
 
+<h1>Create a new class</h1>
+
 <form name="create_class" action="/teacher/classes/new/create/" onsubmit="return validateForm()" method="POST">
     {% csrf_token %}
+    Provide a name for this class:
+    <input type="text" name="title" required>
+    <br>
     {% for deck in decks %}
-        <input type="checkbox" name="deck" value="{{deck.pk}}">{{deck.name}}
+        <input type="checkbox" class="check" name="deck" value="{{deck.pk}}">{{deck.name}}
         Deadline:
-        <input type="datetime-local" name="deck{{deck.pk}}deadline">
+        <input type="datetime-local" class="deadline" name="deadline{{deck.pk}}"> <!-- sends time-zone-unaware datetime to the POST -->
         Weighting %:
-        <input type="number" class="weight" name="deck{{deck.pk}}weight" min="1" max="100" step="1">
+        <input type="number" class="weight" name="weight{{deck.pk}}" min="1" max="100" step="1">
         <br>
     {% endfor %}
     <input type="submit" value="Submit">

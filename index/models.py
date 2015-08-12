@@ -7,6 +7,7 @@ class UserProfile(models.Model):
     teacher_id = models.CharField(max_length = 64) #register as teacher then choose a teacher_id, that will be the url students use to sign up for classes
     ###extension### teacher_id is built from first_name and last_name, with number added if not unique
     student_id = models.CharField(max_length = 64) #if registering as student, need to enter student_id (edX uses the username)
+    ###extension### add timezone support
 
     def __unicode__(self):
         return self.user.username
@@ -17,7 +18,7 @@ class Deck(models.Model):
     def __unicode__(self):
         return self.name
 
-class Group(models.Model):
+class Group(models.Model): #'Groups' == classes
     name = models.CharField(max_length = 256)
     decks = models.ManyToManyField(Deck, through = 'GroupDeck')
     users = models.ManyToManyField(User, through = 'UserGroup')

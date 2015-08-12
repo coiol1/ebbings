@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from index.models import Card, Deck
+from index.models import *
 
 # Create your views here.
 @login_required
@@ -27,5 +27,10 @@ def classes_new(request):
 
 @login_required
 def classes_new_create(request):
-    print request.POST
+    decks = request.POST.getlist('deck')
+    new_class = Group.objects.create(name = request.POST.get('title'))
+    for deck in decks:
+        deadline_string = 'deadline' + str(deck)
+        weight_string = 'weight' + str(deck)
+        GroupDeck.objects.create(group = new_class, deck = Deck.objects.get(pk = deck), deadline = request.POST.get(deadline_string).replace("T", " "), weight = request.POST.get(weight_string))
     return render(request, 'teacher/classes_new_create.html', {})
