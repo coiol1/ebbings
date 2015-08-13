@@ -1,0 +1,17 @@
+<h1>{{deck.name}}</h1>
+
+{% for studentcard in studentcards %}
+    <p>
+    {{studentcard.card.front}} {% if studentcard.card.front_additional %}{{studentcard.card.front_additional}}{% endif %}<br>
+    {{studentcard.card.back}} {% if studentcard.card.back_additional %}{{studentcard.card.back_additional}}{% endif %}<br>
+    {% if studentcard.card.example %}{{studentcard.card.example}}{% endif %}<br>
+    <em>
+        Interval: {{studentcard.interval}} minutes<br>
+        Ease factor: {{studentcard.ease_factor}}<br>
+        Learning state: {{studentcard.learning_state}}<br>
+    </em>
+    <br>
+{% endfor %}
+
+<a href="/student/classes/">Classes</a>
+<a href="/">Home page</a>

@@ -1,13 +1,5 @@
 <h1>Decks review page</h1>
 
-{% for card in cards %}
-    <p><strong>{{card.front}}</strong>
-    {% if card.front_additional %}
-        {{card.front_additional}}
-    {% endif %}
-    {{card.back}}
-    {% if card.back_additional %}
-        {{card.back_additional}}
-    {% endif %}
-    <em>{{card.example}}</em></p>
+{% for deck in decks %}
+    <a href="/teacher/decks/review/{{deck.pk}}">{{deck.name}}</a><br>
 {% endfor %}

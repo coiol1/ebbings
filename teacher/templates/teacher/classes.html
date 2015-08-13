@@ -1,1 +1,11 @@
-<h1>Decks home page</h1>
+<h1>Classes home page</h1>
+
+{% for group in teacher_groups %}
+    <p><strong>{{group.name}}</strong><ul>
+    {% for deck in group.associated_decks %}
+        <li>{{deck.0}} <em>Deadline:</em> {{deck.1}} <em>Weight:</em> {{deck.2}}% <a href="/teacher/decks/review/{{deck.3}}/">Review deck</a></li>
+    {% endfor %}
+    </ul></p>
+{% endfor %}
+
+<a href="/teacher/classes/new/">Create a new class</a>

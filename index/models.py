@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime, timedelta
 
 # Create your models here.
 class UserProfile(models.Model):
@@ -26,6 +27,12 @@ class Group(models.Model): #'Groups' == classes
     def __unicode__(self):
         return self.name
 
+    def associated_decks(self):
+        decks = []
+        for deck in self.decks.all():
+            decks.append((deck.name, str(GroupDeck.objects.get(group = self, deck = deck).deadline)[:-9], str(GroupDeck.objects.get(group = self, deck = deck).weight), deck.pk)) #tuple (name, deadline, weight, pk)
+        return decks
+
 class UserGroup(models.Model):
     user = models.ForeignKey(User)
     group = models.ForeignKey(Group)
@@ -35,7 +42,7 @@ class UserGroup(models.Model):
     role = models.CharField(max_length = 1, choices = ROLE_CHOICES)
 
     def __unicode__(self):
-        return "%s: %s" % (self.user, self.group)
+        return "%s: %s (%s)" % (self.user, self.group, self.role)
 
 class GroupDeck(models.Model):
     group = models.ForeignKey(Group)
@@ -61,13 +68,15 @@ class Card(models.Model):
 class StudentCard(models.Model):
     user = models.ForeignKey(User)
     card = models.ForeignKey(Card)
-    interval = models.IntegerField() #in minutes
-    ease_factor = models.FloatField() #base ease_factor 1.00
+    deck = models.ForeignKey(Deck)
+    interval = models.IntegerField(default = 10) #in minutes
+    due = models.DateTimeField(default = datetime.now)
+    ease_factor = models.FloatField(default = 1.00) #base ease_factor 1.00
     LEARNING_STATE_CHOICES = (
         ('1', 'learning'), 
         ('2', 'relearning'), 
         ('3', 'acquired'))
-    learning_state = models.CharField(max_length = 1, choices = LEARNING_STATE_CHOICES, default = 1)
+    learning_state = models.CharField(max_length = 1, choices = LEARNING_STATE_CHOICES, default = '1')
 
     def __unicode__(self):
         return "%s: %s" % (self.user, self.card)

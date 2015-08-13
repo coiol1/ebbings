@@ -1,0 +1,9 @@
+<h1>Classes home page</h1>
+
+{% for group in student_groups %}
+    <p><strong>{{group.name}}</strong><ul>
+    {% for deck in group.associated_decks %}
+        <li>{{deck.0}} <em>Deadline:</em> {{deck.1}} <em>Weight:</em> {{deck.2}}% <a href="/student/study/{{deck.3}}/">Study now</a></li>
+    {% endfor %}
+    </ul></p>
+{% endfor %}
