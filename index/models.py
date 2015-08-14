@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime, timedelta
+from datetime import datetime
 
 # Create your models here.
 class UserProfile(models.Model):
@@ -71,7 +71,7 @@ class StudentCard(models.Model):
     deck = models.ForeignKey(Deck)
     interval = models.IntegerField(default = 10) #in minutes
     due = models.DateTimeField(default = datetime.now)
-    ease_factor = models.FloatField(default = 1.00) #base ease_factor 1.00
+    ease_factor = models.FloatField(default = 1.00)
     LEARNING_STATE_CHOICES = (
         ('1', 'learning'), 
         ('2', 'relearning'), 

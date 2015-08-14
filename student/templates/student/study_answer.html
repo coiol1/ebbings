@@ -1,0 +1,18 @@
+<h1>{{deck.name}}</h1>
+
+<p>
+    {{due_card.card.front}} {% if due_card.card.front_additional %}{{due_card.card.front_additional}}{% endif %}<br>
+    {{due_card.card.back}} {% if due_card.card.back_additional %}{{due_card.card.back_additional}}{% endif %}<br>
+    {% if due_card.card.example %}{{due_card.card.example}}{% endif %}<br>
+    <em>
+        Due: {{due_card.due}} (UTC)<br>
+        Interval: {{due_card.interval}} minutes<br>
+        Ease factor: {{due_card.ease_factor}}<br>
+        Learning state: {{due_card.learning_state}}<br>
+    </em>
+    <br>
+</p>
+
+<br><br>
+<a href="/student/classes/">Classes</a>
+<a href="/">Home page</a>
