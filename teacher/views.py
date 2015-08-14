@@ -1,28 +1,38 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from index.models import *
+
+def is_teacher(user):
+    if UserProfile.objects.get(user = user).teacher_id:
+        return True
+    return False
 
 # Create your views here.
 @login_required
+@user_passes_test(is_teacher, login_url = '/users/login/?teacher=false',redirect_field_name = None)
 def index(request):
     return render(request, 'teacher/index.html', {})
 
 @login_required
+@user_passes_test(is_teacher, login_url = '/users/login/?teacher=false',redirect_field_name = None)
 def decks(request):
     return render(request, 'teacher/decks.html', {})
 
 @login_required
+@user_passes_test(is_teacher, login_url = '/users/login/?teacher=false',redirect_field_name = None)
 def decks_review(request):
     decks = Deck.objects.all()
     return render(request, 'teacher/decks_review.html', {'decks': decks})
 
 @login_required
+@user_passes_test(is_teacher, login_url = '/users/login/?teacher=false',redirect_field_name = None)
 def decks_review_one(request, deck_pk):
     cards = Card.objects.filter(deck = Deck.objects.get(pk = deck_pk))
     deck_name = Deck.objects.get(pk = deck_pk).name
     return render(request, 'teacher/decks_review_one.html', {'cards': cards, 'deck_name': deck_name})
 
 @login_required
+@user_passes_test(is_teacher, login_url = '/users/login/?teacher=false',redirect_field_name = None)
 def classes(request):
     teacher_groups = []
     for usergroup in UserGroup.objects.filter(user = request.user, role = '1'):
@@ -30,11 +40,13 @@ def classes(request):
     return render(request, 'teacher/classes.html', {'teacher_groups': teacher_groups})
 
 @login_required
+@user_passes_test(is_teacher, login_url = '/users/login/?teacher=false',redirect_field_name = None)
 def classes_new(request):
     decks = Deck.objects.all()
     return render(request, 'teacher/classes_new.html', {'decks': decks})
 
 @login_required
+@user_passes_test(is_teacher, login_url = '/users/login/?teacher=false',redirect_field_name = None)
 def classes_new_create(request):
     decks = request.POST.getlist('deck')
     new_class = Group.objects.create(name = request.POST.get('title'))

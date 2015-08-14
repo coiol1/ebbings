@@ -1,22 +1,8 @@
 <h1>{{deck.name}}</h1>
-<p>Current time (UTC): {{now}}</p>
+<p>Current time: {{now}} (UTC)</p>
+<p>{{num_acquired_cards}} out of {{num_total_cards}} acquired ({{percent_acquired}}%)</p>
 <p>{{num_due_cards}} cards due</p>
 <a href="/student/study/{{deck.pk}}/start/">Start studying!</a>
-<!-- 
-{% for studentcard in studentcards %}
-    <p>
-    {{studentcard.card.front}} {% if studentcard.card.front_additional %}{{studentcard.card.front_additional}}{% endif %}<br>
-    {{studentcard.card.back}} {% if studentcard.card.back_additional %}{{studentcard.card.back_additional}}{% endif %}<br>
-    {% if studentcard.card.example %}{{studentcard.card.example}}{% endif %}<br>
-    <em>
-        Due: {{studentcard.due}} (UTC)<br>
-        Interval: {{studentcard.interval}} minutes<br>
-        Ease factor: {{studentcard.ease_factor}}<br>
-        Learning state: {{studentcard.learning_state}}<br>
-    </em>
-    <br>
-{% endfor %}
- -->
 <br><br>
 <a href="/student/classes/">Classes</a>
 <a href="/">Home page</a>

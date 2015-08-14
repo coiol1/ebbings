@@ -1,9 +1,19 @@
-<h1>Users login page</h1>
 {% if login_fail %}
     <script type="text/javascript">
         alert("Couldn't log in")
     </script>
 {% endif %}
+{% if not_teacher %}
+    <script type="text/javascript">
+        alert("Access restricted to teachers only")
+    </script>
+{% endif %}
+{% if not_student %}
+    <script type="text/javascript">
+        alert("Access restricted to students only")
+    </script>
+{% endif %}
+<h1>Users login page</h1>
 <form action="/users/login/try/" method="POST">
     {% csrf_token %}
     <h2>

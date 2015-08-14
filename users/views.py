@@ -26,6 +26,12 @@ def register_student_check(request):
     return render(request, 'users/register_student_check.html', {'new_user': new_user})
 
 def login(request):
+    not_student = request.GET.get('student')
+    if not_student:
+        return render(request, 'users/login.html', {'not_student': True})
+    not_teacher = request.GET.get('teacher')
+    if not_teacher:
+        return render(request, 'users/login.html', {'not_teacher': True})
     return render(request, 'users/login.html', {})
 
 def login_try(request):

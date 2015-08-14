@@ -1,9 +1,11 @@
 <h1>{{deck.name}}</h1>
-
+<p>Current time: {{now}} (UTC)</p>
 <p><strong>{{due_card.card.front}}</strong></p>
 {% if due_card.card.front_additional %}<p>{{due_card.card.front_additional}}</p>{% endif %}<br>
-<form action="/student/study/{{deck.pk}}/start/" method="GET">
-    <input text="text" name="hidden" value="get_answer" hidden>
+<form action="/student/study/{{deck.pk}}/start/" method="POST">
+    {% csrf_token %}
+    <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
+    <input text="text" name="show_answer" value="y" hidden>
     <input type="submit" name="submit" value="Answer">
 </form>
 <br><br>
