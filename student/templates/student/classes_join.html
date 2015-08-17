@@ -1,0 +1,15 @@
+<h1>Join a class</h1>
+
+<h2>Class name: {{group.name}}<br>
+Teacher: {{teacher.first_name}} {{teacher.last_name}}</h2>
+
+{% if already_joined %}
+<h2>Already joined!</h2>
+{% else %}
+<form action="{% url 's_classes_join_success' group.pk %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Join {{group.name}}">
+</form>
+{% endif %}
+<br>
+<a href="{% url 'index' %}">Home page</a>

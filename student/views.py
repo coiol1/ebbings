@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required, user_passes_test
 from index.models import *
 import random
@@ -38,6 +39,27 @@ def classes(request):
     for usergroup in UserGroup.objects.filter(user = request.user, role = '2'):
         student_groups.append(usergroup.group) #gets the classes (groups) with the user as teacher (role 1)
     return render(request, 'student/classes.html', {'student_groups': student_groups})
+
+@login_required
+@user_passes_test(is_student, login_url = '/users/login/?student=false',redirect_field_name = None)
+def classes_join(request, group_pk):
+    group = Group.objects.get(pk = group_pk)
+    teacher = UserGroup.objects.get(group_id = group_pk, role = '1').user
+    try:
+        UserGroup.objects.get(user = request.user, group = group, role = '2')
+        return render(request, 'student/classes_join.html', {'group': group, 'teacher': teacher, 'already_joined': True})
+    except:
+        return render(request, 'student/classes_join.html', {'group': group, 'teacher': teacher, 'already_joined': False})
+
+@login_required
+@user_passes_test(is_student, login_url = '/users/login/?student=false',redirect_field_name = None)
+def classes_join_success(request, group_pk):
+    if request.method == 'POST':
+        group = Group.objects.get(pk = group_pk)
+        UserGroup.objects.create(user = request.user, group = group, role = '2')
+        return render(request, 'student/classes_join_success.html', {'group': group})
+    else:
+        return redirect(reverse('s_classes_join', args = (group_pk)))
 
 @login_required
 @user_passes_test(is_student, login_url = '/users/login/?student=false',redirect_field_name = None)
