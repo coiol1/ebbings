@@ -1,6 +1,32 @@
+{% load staticfiles %}
+<script type="text/javascript" src="{% static "jquery-2.1.4.min.js" %}"></script>
+<script type="text/javascript">
+function validateForm() {
+    var username = $('#username')[0].value;
+    var teacher_id = $('#teacher_id')[0].value;
+    var response;
+    $.ajax({
+        url: '{% url 'u_register_teacher_check' %}',
+        async: false, //jquery doesn't like synchronous requests, but it's necessary to validate before allowing django db submission???
+        data: {username: username, teacher_id: teacher_id},
+        success: function(jsonresponse) {
+            response = jsonresponse;
+        }
+    });
+    if (response.username_exists === true) {
+        alert('Username already exists');
+        return false;
+    }
+    if (response.teacher_id_exists === true) {
+        alert('Teacher ID already exists');
+        return false;
+    }
+}
+</script>
+
 <h1>Users registration page</h1>
 
-<form action="/users/register_teacher/check/" method="POST">
+<form action="{% url 'u_register_teacher_success' %}" onsubmit="return validateForm()" method="POST">
     {% csrf_token %}
     <h2>
         First name
@@ -8,11 +34,11 @@
         Last name
         <input type='text' name='last_name' required><br>
         Teacher ID (Students will see this)
-        <input type='text' name='teacher_id' required><br>
+        <input type='text' id="teacher_id" name='teacher_id' required><br>
         Email address
         <input type='email' name='email' required><br>
         Username
-        <input type='text' name='username' required><br>
+        <input type='text' id="username" name='username' required><br>
         Password
         <input type='password' name='password' required><br>
         <input type='submit' name='button' value='Create new user'>

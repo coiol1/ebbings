@@ -2,7 +2,7 @@
 <p>Current time: {{now}} (UTC)</p>
 <p>{{num_acquired_cards}} out of {{num_total_cards}} acquired ({{percent_acquired}}%)</p>
 <p>{{num_due_cards}} cards due</p>
-<a href="/student/study/{{deck.pk}}/start/">Start studying!</a>
+<a href="{% url 's_study_start' deck.pk %}">Start studying!</a>
 <br><br>
-<a href="/student/classes/">Classes</a>
-<a href="/">Home page</a>
+<a href="{% url 's_classes' %}">Classes</a>
+<a href="{% url 'index' %}">Home page</a>

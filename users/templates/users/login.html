@@ -14,7 +14,7 @@
     </script>
 {% endif %}
 <h1>Users login page</h1>
-<form action="/users/login/try/" method="POST">
+<form action="{% url 'u_login_try' %}" method="POST">
     {% csrf_token %}
     <h2>
         Username
@@ -24,3 +24,4 @@
         <input type='submit' name='button' value='Log in'>
     </h2>
 </form>
+<a href="{% url 'index' %}">Home page</a>

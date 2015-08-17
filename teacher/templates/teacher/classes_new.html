@@ -36,7 +36,7 @@ function validateForm() {
 
 <h1>Create a new class</h1>
 
-<form name="create_class" action="/teacher/classes/new/create/" onsubmit="return validateForm()" method="POST">
+<form action="{% url 't_classes_new_create' %}" onsubmit="return validateForm()" method="POST">
     {% csrf_token %}
     Provide a name for this class:
     <input type="text" name="title" required>

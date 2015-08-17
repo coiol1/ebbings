@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -16,14 +18,40 @@ def register_student(request):
     return render(request, 'users/register_student.html', {})
 
 def register_teacher_check(request):
+    response = {}
+    username = request.GET.get('username')
+    teacher_id = request.GET.get('teacher_id')
+    try:
+        User.objects.get(username = username)
+        response['username_exists'] = True
+    except:
+        response['username_exists'] = False
+    try:
+        UserProfile.objects.get(teacher_id = teacher_id)
+        response['teacher_id_exists'] = True
+    except:
+        response['teacher_id_exists'] = False
+    return JsonResponse(response)
+
+def register_teacher_success(request):
     new_user = User.objects.create_user(username = request.POST.get('username'), password = request.POST.get('password'), email = request.POST.get('email'), first_name = request.POST.get('first_name'), last_name = request.POST.get('last_name'))
     new_up = UserProfile.objects.create(user = new_user, teacher_id = request.POST.get('teacher_id'))
-    return render(request, 'users/register_teacher_check.html', {'new_user': new_user})
+    return render(request, 'users/register_teacher_success.html', {'new_user': new_user})
 
 def register_student_check(request):
+    response = {}
+    username = request.GET.get('username')
+    try:
+        User.objects.get(username = username)
+        response['username_exists'] = True
+    except:
+        response['username_exists'] = False
+    return JsonResponse(response)
+
+def register_student_success(request):
     new_user = User.objects.create_user(username = request.POST.get('username'), password = request.POST.get('password'), email = request.POST.get('email'), first_name = request.POST.get('first_name'), last_name = request.POST.get('last_name'))
     new_up = UserProfile.objects.create(user = new_user, student_id = request.POST.get('student_id'))
-    return render(request, 'users/register_student_check.html', {'new_user': new_user})
+    return render(request, 'users/register_student_success.html', {'new_user': new_user})
 
 def login(request):
     not_student = request.GET.get('student')
@@ -41,11 +69,11 @@ def login_try(request):
     if user is not None:
         if user.is_active:
             auth_login(request, user)
-            return redirect('/users/login/success/')
+            return redirect(reverse('u_login_success'))
         else:
-            return redirect('/users/login/')
+            return redirect(reverse('u_login'))
     else:
-        return redirect('/users/login/')
+        return redirect(reverse('u_login'))
 
 def login_success(request):
     return render(request, 'users/login_success.html', {})
@@ -57,9 +85,9 @@ def logout_try(request):
     try:
         if request.GET['logout']:
             auth_logout(request)
-            return redirect('/users/logout/success/')
+            return redirect(reverse('logout_success'))
     except:
-        return redirect('/users/logout/')
+        return redirect(reverse('logout'))
 
 def logout_success(request):
     return render(request, 'users/logout_success.html', {})

@@ -1,7 +1,7 @@
 <h1>Users home page</h1>
 
-<a href="/users/login/">Log in</a>
-<a href="/users/logout/">Log out</a>
-<a href="/users/register_teacher/">Register a teacher</a>
-<a href="/users/register_student/">Register a student</a>
-<a href="/">Home page</a>
+<a href="{% url 'u_login' %}">Log in</a>
+<a href="{% url 'u_logout' %}">Log out</a>
+<a href="{% url 'u_register_teacher' %}">Register a teacher</a>
+<a href="{% url 'u_register_student' %}">Register a student</a>
+<a href="{% url 'index' %}">Home page</a>
