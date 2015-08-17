@@ -40,7 +40,7 @@ def index(request):
 def classes(request):
     student_groups = []
     for usergroup in UserGroup.objects.filter(user = request.user, role = '2'):
-        student_groups.append(usergroup.group) #gets the classes (groups) with the user as teacher (role 1)
+        student_groups.append(usergroup.group) #gets the classes (groups) with the user as student (role 2)
     return render(request, 'student/classes.html', {'student_groups': student_groups})
 
 @login_required
@@ -66,8 +66,14 @@ def classes_join_success(request, group_pk):
 
 @login_required
 @user_passes_test(is_student, login_url = NON_STUDENT_LOGIN, redirect_field_name = None)
-def study_intro(request, deck_pk):
+def study_intro(request, group_pk, deck_pk):
+    group = Group.objects.get(pk = group_pk)
     deck = Deck.objects.get(pk = deck_pk)
+    groupdeck = GroupDeck.objects.filter(group = group, deck = deck, deadline__gt = datetime.now)
+    if groupdeck:
+        deadline_passed = False
+    else:
+        deadline_passed = True
     all_cards = Card.objects.filter(deck = deck)
     first_card = all_cards[0]
     if not StudentCard.objects.filter(user = request.user, card = first_card, deck = deck): #if the user doesn't already have the first studentcard (and therefore doesn't have any studentcards)
@@ -76,20 +82,24 @@ def study_intro(request, deck_pk):
     num_due_cards = StudentCard.objects.filter(user = request.user, deck = deck, due__lt = datetime.now).count()
     num_acquired_cards = StudentCard.objects.filter(user = request.user, deck = deck, learning_state = '3').count()
     num_total_cards = StudentCard.objects.filter(user = request.user, deck = deck).count()
-    percent_acquired = "%.1f" % (num_acquired_cards / float(num_total_cards))
-    return render(request, 'student/study_intro.html', {'num_due_cards': num_due_cards, 'num_acquired_cards': num_acquired_cards, 'num_total_cards': num_total_cards, 'percent_acquired': percent_acquired, 'deck': deck, 'now': datetime.now})
+    percent_acquired = "%.1f" % (num_acquired_cards / float(num_total_cards) * 100)
+    return render(request, 'student/study_intro.html', {'num_due_cards': num_due_cards, 'num_acquired_cards': num_acquired_cards, 'num_total_cards': num_total_cards, 'percent_acquired': percent_acquired, 'deck': deck, 'group': group, 'now': datetime.now, 'deadline_passed': deadline_passed})
 
 @login_required
 @user_passes_test(is_student, login_url = NON_STUDENT_LOGIN, redirect_field_name = None)
-def study_start(request, deck_pk):
+def study_start(request, group_pk, deck_pk):
+    group = Group.objects.get(pk = group_pk)
     deck = Deck.objects.get(pk = deck_pk)
+    deadline_passed = GroupDeck.objects.filter(group = group, deck = deck, deadline__lt = datetime.now)
+    if deadline_passed:
+        return redirect(reverse('s_study_intro', args = (group.pk, deck.pk)))
     card_pk = request.POST.get('card_pk')
     show_answer = request.POST.get('show_answer')
     if show_answer == 'y':
         due_card = StudentCard.objects.get(pk = card_pk)
-        return render(request, 'student/study_answer.html', {'deck': deck, 'now': datetime.now, 'due_card': due_card})
+        return render(request, 'student/study_answer.html', {'deck': deck, 'group': group, 'now': datetime.now, 'due_card': due_card})
     answered = request.POST.get('answered')
     if answered:
         answer_card(StudentCard.objects.get(pk = card_pk), int(answered))
     due_card = StudentCard.objects.filter(user = request.user, deck = deck, due__lt = datetime.now).first()
-    return render(request, 'student/study_question.html', {'deck': deck, 'now': datetime.now, 'due_card': due_card})
+    return render(request, 'student/study_question.html', {'deck': deck, 'group': group, 'now': datetime.now, 'due_card': due_card})

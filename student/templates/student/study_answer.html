@@ -12,19 +12,19 @@
     Ease factor: {{due_card.ease_factor}}<br>
     Learning state: {{due_card.learning_state}}<br>
 </em></p>
-<form action="{% url 's_study_start' deck.pk %}" method="POST">
+<form action="{% url 's_study_start' group.pk deck.pk %}" method="POST">
     {% csrf_token %}
     <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
     <input text="text" name="answered" value="1" hidden>
     <input type="submit" name="submit" value="I didn't get the right answer">
 </form>
-<form action="{% url 's_study_start' deck.pk %}" method="POST">
+<form action="{% url 's_study_start' group.pk deck.pk %}" method="POST">
     {% csrf_token %}
     <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
     <input text="text" name="answered" value="3" hidden>
     <input type="submit" name="submit" value="I got the right answer but it was difficult">
 </form>
-<form action="{% url 's_study_start' deck.pk %}" method="POST">
+<form action="{% url 's_study_start' group.pk deck.pk %}" method="POST">
     {% csrf_token %}
     <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
     <input text="text" name="answered" value="5" hidden>

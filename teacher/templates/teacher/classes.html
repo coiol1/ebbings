@@ -6,6 +6,7 @@
         <li>{{deck.0}} <em>Deadline:</em> {{deck.1}} <em>Weight:</em> {{deck.2}}% <a href="{% url 't_decks_review_one' deck.3 %}">Review deck</a></li>
     {% endfor %}
     </ul>
+    <a href="{% url 't_classes_one' group.pk %}">View student progress</a><br>
     Students can join {{group.name}} by going to <a href="{% url 's_classes_join' group.pk %}">this URL</a>
     </p>
 {% endfor %}

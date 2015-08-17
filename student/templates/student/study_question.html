@@ -2,7 +2,7 @@
 <p>Current time: {{now}} (UTC)</p>
 <p><strong>{{due_card.card.front}}</strong></p>
 {% if due_card.card.front_additional %}<p>{{due_card.card.front_additional}}</p>{% endif %}<br>
-<form action="{% url 's_study_start' deck.pk %}" method="POST">
+<form action="{% url 's_study_start' group.pk deck.pk %}" method="POST">
     {% csrf_token %}
     <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
     <input text="text" name="show_answer" value="y" hidden>

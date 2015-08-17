@@ -9,5 +9,8 @@
     {% if card.back_additional %}
         {{card.back_additional}}
     {% endif %}
-    <em>{{card.example}}</em></p>
+    {% if card.example %}
+    <em>{{card.example}}</em>
+    {% endif %}
+    </p>
 {% endfor %}

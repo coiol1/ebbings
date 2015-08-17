@@ -1,3 +1,5 @@
 *.sqlite3
 .DS_Store
-*500ielts.*
+500ielts.*
+*.txt
+deck_creation_scripts.py
