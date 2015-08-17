@@ -4,29 +4,28 @@
 function validateForm() {
     var username = $('#username')[0].value;
     var teacher_id = $('#teacher_id')[0].value;
-    var response;
     $.ajax({
         url: '{% url 'u_register_teacher_check' %}',
-        async: false, //jquery doesn't like synchronous requests, but it's necessary to validate before allowing django db submission???
         data: {username: username, teacher_id: teacher_id},
         success: function(jsonresponse) {
-            response = jsonresponse;
+            if (jsonresponse.username_exists === true) {
+                alert("Username already exists");
+            }
+            if (jsonresponse.teacher_id_exists === true) {
+                alert("Teacher ID already exists");
+            }
+            if ((jsonresponse.username_exists === false) && (jsonresponse.teacher_id_exists === false)) {
+                document.register_teacher.submit();
+            }
         }
     });
-    if (response.username_exists === true) {
-        alert('Username already exists');
-        return false;
-    }
-    if (response.teacher_id_exists === true) {
-        alert('Teacher ID already exists');
-        return false;
-    }
+    return false;
 }
 </script>
 
 <h1>Users registration page</h1>
 
-<form action="{% url 'u_register_teacher_success' %}" onsubmit="return validateForm()" method="POST">
+<form action="{% url 'u_register_teacher_success' %}" name="register_teacher" onsubmit="return validateForm()" method="POST">
     {% csrf_token %}
     <h2>
         First name

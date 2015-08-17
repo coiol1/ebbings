@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
+from django.conf import settings
 from django.contrib.auth.decorators import login_required, user_passes_test
 from index.models import *
 import random
+
+NON_STUDENT_LOGIN = settings.LOGIN_URL + '?student=false'
 
 def is_student(user):
     if UserProfile.objects.get(user = user).student_id:
@@ -28,12 +31,12 @@ def answer_card(card, selection):
 
 # Create your views here.
 @login_required
-@user_passes_test(is_student, login_url = '/users/login/?student=false',redirect_field_name = None)
+@user_passes_test(is_student, login_url = NON_STUDENT_LOGIN, redirect_field_name = None)
 def index(request):
     return render(request, 'student/index.html', {})
 
 @login_required
-@user_passes_test(is_student, login_url = '/users/login/?student=false',redirect_field_name = None)
+@user_passes_test(is_student, login_url = NON_STUDENT_LOGIN, redirect_field_name = None)
 def classes(request):
     student_groups = []
     for usergroup in UserGroup.objects.filter(user = request.user, role = '2'):
@@ -41,7 +44,7 @@ def classes(request):
     return render(request, 'student/classes.html', {'student_groups': student_groups})
 
 @login_required
-@user_passes_test(is_student, login_url = '/users/login/?student=false',redirect_field_name = None)
+@user_passes_test(is_student, login_url = NON_STUDENT_LOGIN, redirect_field_name = None)
 def classes_join(request, group_pk):
     group = Group.objects.get(pk = group_pk)
     teacher = UserGroup.objects.get(group_id = group_pk, role = '1').user
@@ -52,7 +55,7 @@ def classes_join(request, group_pk):
         return render(request, 'student/classes_join.html', {'group': group, 'teacher': teacher, 'already_joined': False})
 
 @login_required
-@user_passes_test(is_student, login_url = '/users/login/?student=false',redirect_field_name = None)
+@user_passes_test(is_student, login_url = NON_STUDENT_LOGIN, redirect_field_name = None)
 def classes_join_success(request, group_pk):
     if request.method == 'POST':
         group = Group.objects.get(pk = group_pk)
@@ -62,7 +65,7 @@ def classes_join_success(request, group_pk):
         return redirect(reverse('s_classes_join', args = (group_pk)))
 
 @login_required
-@user_passes_test(is_student, login_url = '/users/login/?student=false',redirect_field_name = None)
+@user_passes_test(is_student, login_url = NON_STUDENT_LOGIN, redirect_field_name = None)
 def study_intro(request, deck_pk):
     deck = Deck.objects.get(pk = deck_pk)
     all_cards = Card.objects.filter(deck = deck)
@@ -77,7 +80,7 @@ def study_intro(request, deck_pk):
     return render(request, 'student/study_intro.html', {'num_due_cards': num_due_cards, 'num_acquired_cards': num_acquired_cards, 'num_total_cards': num_total_cards, 'percent_acquired': percent_acquired, 'deck': deck, 'now': datetime.now})
 
 @login_required
-@user_passes_test(is_student, login_url = '/users/login/?student=false',redirect_field_name = None)
+@user_passes_test(is_student, login_url = NON_STUDENT_LOGIN, redirect_field_name = None)
 def study_start(request, deck_pk):
     deck = Deck.objects.get(pk = deck_pk)
     card_pk = request.POST.get('card_pk')
