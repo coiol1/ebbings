@@ -1,3 +1,16 @@
+{% extends 'ebbings/base.html' %}
+{% load staticfiles %}
+
+{% block head %}
+<script type="text/javascript" src="{% static "mousetrap.min.js" %}"></script>
+<script type="text/javascript">
+Mousetrap.bind('1', function() {document.answer1.submit();});
+Mousetrap.bind('2', function() {document.answer3.submit();});
+Mousetrap.bind('3', function() {document.answer5.submit();});
+</script>
+{% endblock %}
+
+{% block content %}
 <h1>{{deck.name}}</h1>
 <p>Current time: {{now}} (UTC)</p>
 <p><strong>{{due_card.card.front}}</strong></p>
@@ -12,24 +25,25 @@
     Ease factor: {{due_card.ease_factor}}<br>
     Learning state: {{due_card.learning_state}}<br>
 </em></p>
-<form action="{% url 's_study_start' group.pk deck.pk %}" method="POST">
+<form action="{% url 's_study_start' group.pk deck.pk %}" name="answer1" method="POST">
     {% csrf_token %}
     <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
     <input text="text" name="answered" value="1" hidden>
-    <input type="submit" name="submit" value="I didn't get the right answer">
+    <input type="submit" name="button" value="I didn't get the right answer (press 1)">
 </form>
-<form action="{% url 's_study_start' group.pk deck.pk %}" method="POST">
+<form action="{% url 's_study_start' group.pk deck.pk %}" name="answer3" method="POST">
     {% csrf_token %}
     <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
     <input text="text" name="answered" value="3" hidden>
-    <input type="submit" name="submit" value="I got the right answer but it was difficult">
+    <input type="submit" name="button" value="I got the right answer but it was difficult (press 2)">
 </form>
-<form action="{% url 's_study_start' group.pk deck.pk %}" method="POST">
+<form action="{% url 's_study_start' group.pk deck.pk %}" name="answer5" method="POST">
     {% csrf_token %}
     <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
     <input text="text" name="answered" value="5" hidden>
-    <input type="submit" name="submit" value="I got the right answer and it was easy">
+    <input type="submit" name="button" value="I got the right answer and it was easy (press 3)">
 </form>
 <br><br>
 <a href="{% url 's_classes' %}">Classes</a>
 <a href="{% url 'index' %}">Home page</a>
+{% endblock %}

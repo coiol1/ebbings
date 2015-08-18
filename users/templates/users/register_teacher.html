@@ -1,5 +1,7 @@
+{% extends 'ebbings/base.html' %}
 {% load staticfiles %}
-<script type="text/javascript" src="{% static "jquery-2.1.4.min.js" %}"></script>
+
+{% block head %}
 <script type="text/javascript">
 function validateForm() {
     var username = $('#username')[0].value;
@@ -22,7 +24,9 @@ function validateForm() {
     return false;
 }
 </script>
+{% endblock %}
 
+{% block content %}
 <h1>Users registration page</h1>
 
 <form action="{% url 'u_register_teacher_success' %}" name="register_teacher" onsubmit="return validateForm()" method="POST">
@@ -43,3 +47,4 @@ function validateForm() {
         <input type='submit' name='button' value='Create new user'>
     </h2>
 </form>
+{% endblock %}

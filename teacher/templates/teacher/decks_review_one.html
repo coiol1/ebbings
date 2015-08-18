@@ -1,3 +1,6 @@
+{% extends 'ebbings/base.html' %}
+
+{% block content %}
 <h1>{{deck_name}}</h1>
 
 {% for card in cards %}
@@ -14,3 +17,4 @@
     {% endif %}
     </p>
 {% endfor %}
+{% endblock %}

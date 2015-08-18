@@ -1,3 +1,6 @@
+{% extends 'ebbings/base.html' %}
+
+{% block content %}
 <h1>Classes home page</h1>
 
 {% for group in student_groups %}
@@ -9,3 +12,4 @@
 {% endfor %}
 <br>
 <a href="{% url 'index' %}">Home page</a>
+{% endblock %}

@@ -1,18 +1,20 @@
+{% extends 'ebbings/base.html' %}
+
+{% block head %}
+<script type="text/javascript">
 {% if login_fail %}
-    <script type="text/javascript">
-        alert("Couldn't log in")
-    </script>
+    alert("Couldn't log in")
 {% endif %}
 {% if not_teacher %}
-    <script type="text/javascript">
-        alert("Access restricted to teachers only")
-    </script>
+    alert("Access restricted to teachers only")
 {% endif %}
 {% if not_student %}
-    <script type="text/javascript">
-        alert("Access restricted to students only")
-    </script>
+    alert("Access restricted to students only")
 {% endif %}
+</script>
+{% endblock %}
+
+{% block content %}
 <h1>Users login page</h1>
 <form action="{% url 'u_login_try' %}" method="POST">
     {% csrf_token %}
@@ -25,3 +27,4 @@
     </h2>
 </form>
 <a href="{% url 'index' %}">Home page</a>
+{% endblock %}

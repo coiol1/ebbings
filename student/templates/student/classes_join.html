@@ -1,3 +1,6 @@
+{% extends 'ebbings/base.html' %}
+
+{% block content %}
 <h1>Join a class</h1>
 
 <h2>Class name: {{group.name}}<br>
@@ -13,3 +16,4 @@ Teacher: {{teacher.first_name}} {{teacher.last_name}}</h2>
 {% endif %}
 <br>
 <a href="{% url 'index' %}">Home page</a>
+{% endblock %}

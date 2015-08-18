@@ -1,13 +1,29 @@
+{% extends 'ebbings/base.html' %}
+{% load staticfiles %}
+
+{% block head %}
+<script type="text/javascript" src="{% static "mousetrap.min.js" %}"></script>
+<script type="text/javascript">
+Mousetrap.bind(['enter', 'return', 'space'], function() {document.show_answer_form.submit();});
+</script>
+{% endblock %}
+
+{% block content %}
 <h1>{{deck.name}}</h1>
 <p>Current time: {{now}} (UTC)</p>
+{% if due_card %}
 <p><strong>{{due_card.card.front}}</strong></p>
 {% if due_card.card.front_additional %}<p>{{due_card.card.front_additional}}</p>{% endif %}<br>
-<form action="{% url 's_study_start' group.pk deck.pk %}" method="POST">
+<form action="{% url 's_study_start' group.pk deck.pk %}" name="show_answer_form" method="POST">
     {% csrf_token %}
     <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
     <input text="text" name="show_answer" value="y" hidden>
-    <input type="submit" name="submit" value="Answer">
+    <input type="submit" name="button" value="Show answer (press return or space)">
 </form>
+{% else %}
+<p>No cards due at this time.</p>
+{% endif %}
 <br><br>
 <a href="{% url 's_classes' %}">Classes</a>
 <a href="{% url 'index' %}">Home page</a>
+{% endblock %}

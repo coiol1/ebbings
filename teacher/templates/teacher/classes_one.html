@@ -1,3 +1,6 @@
+{% extends 'ebbings/base.html' %}
+
+{% block content %}
 <h1>{{group.name}}</h1>
 <p>
 {% for groupdeck in groupdecks %}
@@ -29,3 +32,4 @@
 </table>
 <br>
 <a href="{% url 't_classes' %}">Return to class list</a>
+{% endblock %}

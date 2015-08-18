@@ -6,9 +6,13 @@ from index.models import *
 NON_TEACHER_LOGIN = settings.LOGIN_URL + '?teacher=false'
 
 def is_teacher(user):
-    if UserProfile.objects.get(user = user).teacher_id:
-        return True
-    return False
+    try:
+        if UserProfile.objects.get(user = user).teacher_id:
+            return True
+        else:
+            return False
+    except:
+        return False
 
 # Create your views here.
 @login_required

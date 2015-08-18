@@ -1,5 +1,7 @@
+{% extends 'ebbings/base.html' %}
 {% load staticfiles %}
-<script type="text/javascript" src="{% static "jquery-2.1.4.min.js" %}"></script>
+
+{% block head %}
 <script type="text/javascript" src="{% static "moment.min.js" %}"></script>
 <script type="text/javascript">
 function validateForm() {
@@ -33,7 +35,9 @@ function validateForm() {
     }
 }
 </script>
+{% endblock %}
 
+{% block content %}
 <h1>Create a new class</h1>
 
 <form action="{% url 't_classes_new_create' %}" onsubmit="return validateForm()" method="POST">
@@ -51,3 +55,4 @@ function validateForm() {
     {% endfor %}
     <input type="submit" value="Submit">
 </form>
+{% endblock %}

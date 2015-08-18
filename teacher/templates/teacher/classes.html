@@ -1,3 +1,6 @@
+{% extends 'ebbings/base.html' %}
+
+{% block content %}
 <h1>Classes home page</h1>
 
 {% for group in teacher_groups %}
@@ -12,3 +15,4 @@
 {% endfor %}
 
 <a href="{% url 't_classes_new' %}">Create a new class</a>
+{% endblock %}

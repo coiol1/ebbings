@@ -8,9 +8,13 @@ import random
 NON_STUDENT_LOGIN = settings.LOGIN_URL + '?student=false'
 
 def is_student(user):
-    if UserProfile.objects.get(user = user).student_id:
-        return True
-    return False
+    try:
+        if UserProfile.objects.get(user = user).student_id:
+            return True
+        else:
+            return False
+    except:
+        return False
 
 def answer_card(card, selection):
     if selection == '1':
