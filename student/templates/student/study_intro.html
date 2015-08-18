@@ -1,16 +1,26 @@
 {% extends 'ebbings/base.html' %}
 
 {% block content %}
-<h1>{{deck.name}}</h1>
-<p>Current time: {{now}} (UTC)</p>
-<p>{{num_acquired_cards}} out of {{num_total_cards}} acquired ({{percent_acquired}}%)</p>
-{% if deadline_passed %}
-    <p>Deadline passed! You can no longer study this deck.</p>
-{% else %}
-    <p>{{num_due_cards}} cards due</p>
-    <a href="{% url 's_study_start' group.pk deck.pk %}">Start studying!</a>
-{% endif %}
-<br><br>
-<a href="{% url 's_classes' %}">Classes</a>
-<a href="{% url 'index' %}">Home page</a>
+<div class="container">
+  <div class="page-header">
+    <h1>{{deck.name}}</h1>
+  </div>
+  <div class="row">
+    <div class="col-xs-4">Current time: {{now}} (UTC)</div>
+    <div class="col-xs-4">{{num_acquired_cards}} out of {{num_total_cards}} acquired ({{percent_acquired}}%)</div>
+    <div class="col-xs-4">
+      {% if deadline_passed %}
+      Deadline passed! You can no longer study this deck.
+      {% else %}
+      {{num_due_cards}} cards due
+      {% endif %}
+    </div>
+  </div>
+  {% if not deadline_passed %}
+  <br>
+  <div class="row">
+    <div class="col-xs-12"><a class="btn btn-primary btn-lg" href="{% url 'student:study_start' group.pk deck.pk %}">Start studying!</a></div>
+  </div>
+  {% endif %}
+</div>
 {% endblock %}

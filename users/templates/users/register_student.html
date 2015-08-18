@@ -6,7 +6,7 @@
 function validateForm() {
     var username = $('#username')[0].value;
     $.ajax({
-        url: '{% url 'u_register_student_check' %}',
+        url: '{% url 'users:register_student_check' %}',
         data: {username: username},
         success: function(jsonresponse) {
             if (jsonresponse.username_exists === true) {
@@ -25,7 +25,7 @@ function validateForm() {
 {% block content %}
 <h1>Users registration page</h1>
 
-<form action="{% url 'u_register_student_success' %}" name="register_student" onsubmit="return validateForm()" method="POST">
+<form action="{% url 'users:register_student_success' %}" name="register_student" onsubmit="return validateForm()" method="POST">
     {% csrf_token %}
     <h2>
         First name

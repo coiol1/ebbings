@@ -11,39 +11,72 @@ Mousetrap.bind('3', function() {document.answer5.submit();});
 {% endblock %}
 
 {% block content %}
-<h1>{{deck.name}}</h1>
-<p>Current time: {{now}} (UTC)</p>
-<p><strong>{{due_card.card.front}}</strong></p>
-{% if due_card.card.front_additional %}<p>{{due_card.card.front_additional}}</p>{% endif %}
-<p>{{due_card.card.back}}</p> 
-{% if due_card.card.back_additional %}<p>{{due_card.card.back_additional}}</p>{% endif %}
-<p>
-{% if due_card.card.example %}{{due_card.card.example}}{% endif %}<br></p>
-<p><em>
-    Due: {{due_card.due}} (UTC)<br>
-    Interval: {{due_card.interval}} minutes<br>
-    Ease factor: {{due_card.ease_factor}}<br>
-    Learning state: {{due_card.learning_state}}<br>
-</em></p>
-<form action="{% url 's_study_start' group.pk deck.pk %}" name="answer1" method="POST">
-    {% csrf_token %}
-    <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
-    <input text="text" name="answered" value="1" hidden>
-    <input type="submit" name="button" value="I didn't get the right answer (press 1)">
-</form>
-<form action="{% url 's_study_start' group.pk deck.pk %}" name="answer3" method="POST">
-    {% csrf_token %}
-    <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
-    <input text="text" name="answered" value="3" hidden>
-    <input type="submit" name="button" value="I got the right answer but it was difficult (press 2)">
-</form>
-<form action="{% url 's_study_start' group.pk deck.pk %}" name="answer5" method="POST">
-    {% csrf_token %}
-    <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
-    <input text="text" name="answered" value="5" hidden>
-    <input type="submit" name="button" value="I got the right answer and it was easy (press 3)">
-</form>
-<br><br>
-<a href="{% url 's_classes' %}">Classes</a>
-<a href="{% url 'index' %}">Home page</a>
+<div class="container">
+  <div class="page-header">
+    <h1>{{deck.name}}</h1>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">Current time: {{now}} (UTC)</div>
+  </div>
+  <br>
+  <div class="row"> 
+    <div class="col-xs-4"><strong>{{due_card.card.front}}</strong></div>
+    {% if due_card.card.front_additional %}<div class="col-xs-8">{{due_card.card.front_additional}}</div>{% endif %}
+  </div>
+  <hr>
+  <div class="row"> 
+    {% if due_card.card.back_additional %}
+    <div class="col-xs-4"><strong>{{due_card.card.back}}</strong></div>
+    <div class="col-xs-8">{{due_card.card.back_additional}}</div>
+    {% else %}
+    <div class="col-xs-12"><strong>{{due_card.card.back}}</strong></div>
+    {% endif %}
+  </div>
+  <br>
+  {% if due_card.card.example %}
+  <div class="row">
+    <div class="col-xs-12">{{due_card.card.example}}</div>
+  </div>
+  {% endif %}
+  <hr>
+  <div class="row">
+    <div class="col-xs-6 col-sm-3">Due: {{due_card.due}} (UTC)</div>
+    <div class="col-xs-6 col-sm-3">Interval: {{due_card.interval}} minutes</div>
+    <div class="col-xs-6 col-sm-3">Ease factor: {{due_card.ease_factor}}</div>
+    <div class="col-xs-6 col-sm-3">Learning state: {{due_card.learning_state}}</div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-12">
+    <form action="{% url 'student:study_start' group.pk deck.pk %}" name="answer1" method="POST">
+      {% csrf_token %}
+      <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
+      <input text="text" name="answered" value="1" hidden>
+      <input type="submit" class="btn btn-danger" name="button" value="I didn't get the right answer (press 1)">
+    </form>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-12">
+    <form action="{% url 'student:study_start' group.pk deck.pk %}" name="answer3" method="POST">
+      {% csrf_token %}
+      <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
+      <input text="text" name="answered" value="3" hidden>
+      <input type="submit" class="btn btn-warning" name="button" value="I got the right answer but it was difficult (press 2)">
+    </form>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-12">
+    <form action="{% url 'student:study_start' group.pk deck.pk %}" name="answer5" method="POST">
+      {% csrf_token %}
+      <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
+      <input text="text" name="answered" value="5" hidden>
+      <input type="submit" class="btn btn-success" name="button" value="I got the right answer and it was easy (press 3)">
+    </form>
+    </div>
+  </div>
+</div>
 {% endblock %}

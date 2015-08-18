@@ -1,15 +1,22 @@
 {% extends 'ebbings/base.html' %}
 
 {% block content %}
-<h1>Classes home page</h1>
-
-{% for group in student_groups %}
-    <p><strong>{{group.name}}</strong><ul>
+<div class="container">
+  <div class="page-header">
+    <h1>Classes homepage</h1>
+  </div>
+  {% for group in student_groups %}
+  <div class="row">
+    <div class="col-xs-12"><h4><strong>{{group.name}}</strong></h4></div>
+  </div>
     {% for deck in group.associated_decks %}
-        <li>{{deck.0}} <em>Deadline:</em> {{deck.1}} <em>Weight:</em> {{deck.2}}% <a href="{% url 's_study_intro' group.pk deck.3 %}">Study now</a></li>
+    <div class="row">
+      <div class="col-xs-5">{{deck.0}}</div>
+      <div class="col-xs-3"><em>Deadline:</em> {{deck.1}} </div>
+      <div class="col-xs-2"><em>Weight:</em> {{deck.2}}% </div>
+      <div class="col-xs-2"><a href="{% url 'student:study_intro' group.pk deck.3 %}">Study now</a></div>
+    </div>
     {% endfor %}
-    </ul></p>
-{% endfor %}
-<br>
-<a href="{% url 'index' %}">Home page</a>
+  {% endfor %}
+</div>
 {% endblock %}

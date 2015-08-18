@@ -1,9 +1,12 @@
 {% extends 'ebbings/base.html' %}
 
 {% block content %}
-<h1>Logout</h1>
-
-<form action="{% url 'u_logout_try' %}" method="GET">
-    <input type="submit" name="logout" value="Log out">
-</form>
+<div class="container">
+  <div class="page-header">
+    <h1>Logout</h1>
+  </div>
+  <form action="{% url 'users:logout_try' %}" method="GET">
+    <input type="submit" class="btn btn-primary" name="logout" value="Log out">
+  </form>
+</div>
 {% endblock %}

@@ -1,19 +1,28 @@
 {% extends 'ebbings/base.html' %}
 
 {% block content %}
-<h1>Join a class</h1>
-
-<h2>Class name: {{group.name}}<br>
-Teacher: {{teacher.first_name}} {{teacher.last_name}}</h2>
-
-{% if already_joined %}
-<h2>Already joined!</h2>
-{% else %}
-<form action="{% url 's_classes_join_success' group.pk %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="Join {{group.name}}">
-</form>
-{% endif %}
-<br>
-<a href="{% url 'index' %}">Home page</a>
+<div class="container">
+  <div class="page-header">
+    <h1>Join a class</h1>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">Class name: {{group.name}}</div>
+    <div class="col-xs-12 col-sm-6">Teacher: {{teacher.first_name}} {{teacher.last_name}}</div>
+  </div>
+  <br>
+  {% if already_joined %}
+  <div class="row">
+    <div class="col-xs-12"><h3>Already joined!</h3></div>
+  </div>
+  {% else %}
+  <div class="row">
+    <div class="col-xs-12">
+      <form action="{% url 'student:classes_join_success' group.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary" value="Join {{group.name}}">
+      </form>
+    </div>
+  </div>
+  {% endif %}
+</div>
 {% endblock %}

@@ -9,21 +9,34 @@ Mousetrap.bind(['enter', 'return', 'space'], function() {document.show_answer_fo
 {% endblock %}
 
 {% block content %}
-<h1>{{deck.name}}</h1>
-<p>Current time: {{now}} (UTC)</p>
-{% if due_card %}
-<p><strong>{{due_card.card.front}}</strong></p>
-{% if due_card.card.front_additional %}<p>{{due_card.card.front_additional}}</p>{% endif %}<br>
-<form action="{% url 's_study_start' group.pk deck.pk %}" name="show_answer_form" method="POST">
+<div class="container">
+  <div class="page-header">
+    <h1>{{deck.name}}</h1>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">Current time: {{now}} (UTC)</div>
+  </div>
+  <br>
+  {% if due_card %}
+  <div class="row"> 
+    <div class="col-xs-4"><strong>{{due_card.card.front}}</strong></div>
+    {% if due_card.card.front_additional %}<div class="col-xs-8">{{due_card.card.front_additional}}</div>{% endif %}
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-12">
+    <form action="{% url 'student:study_start' group.pk deck.pk %}" name="show_answer_form" method="POST">
     {% csrf_token %}
-    <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
-    <input text="text" name="show_answer" value="y" hidden>
-    <input type="submit" name="button" value="Show answer (press return or space)">
-</form>
-{% else %}
-<p>No cards due at this time.</p>
-{% endif %}
-<br><br>
-<a href="{% url 's_classes' %}">Classes</a>
-<a href="{% url 'index' %}">Home page</a>
+      <input text="text" name="card_pk" value="{{due_card.pk}}" hidden>
+      <input text="text" name="show_answer" value="y" hidden>
+      <input type="submit" class="btn btn-primary" name="button" value="Show answer (press return or space)">
+    </form>
+    </div>
+  </div>
+  {% else %}
+  <div class="row">
+    <div class="col-xs-12"><h4>No cards due at this time.</h4></div>
+  </div>
+  {% endif %}
+</div>
 {% endblock %}

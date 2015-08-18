@@ -69,11 +69,11 @@ def login_try(request):
     if user is not None:
         if user.is_active:
             auth_login(request, user)
-            return redirect(reverse('u_login_success'))
+            return redirect(reverse('users:login_success'))
         else:
-            return redirect(reverse('u_login'))
+            return redirect(reverse('users:login'))
     else:
-        return redirect(reverse('u_login'))
+        return redirect(reverse('users:login'))
 
 def login_success(request):
     return render(request, 'users/login_success.html', {})
@@ -85,9 +85,9 @@ def logout_try(request):
     try:
         if request.GET['logout']:
             auth_logout(request)
-            return redirect(reverse('logout_success'))
+            return redirect(reverse('users:logout_success'))
     except:
-        return redirect(reverse('logout'))
+        return redirect(reverse('users:logout'))
 
 def logout_success(request):
     return render(request, 'users/logout_success.html', {})

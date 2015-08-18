@@ -1,11 +1,9 @@
 {% extends 'ebbings/base.html' %}
 
 {% block content %}
-<h1>Users home page</h1>
-
-<a href="{% url 'u_login' %}">Log in</a>
-<a href="{% url 'u_logout' %}">Log out</a>
-<a href="{% url 'u_register_teacher' %}">Register a teacher</a>
-<a href="{% url 'u_register_student' %}">Register a student</a>
-<a href="{% url 'index' %}">Home page</a>
+<div class="container">
+  <div class="page-header">
+    <h1>Users home page</h1>
+  </div>
+</div>
 {% endblock %}

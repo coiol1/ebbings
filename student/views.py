@@ -66,7 +66,7 @@ def classes_join_success(request, group_pk):
         UserGroup.objects.create(user = request.user, group = group, role = '2')
         return render(request, 'student/classes_join_success.html', {'group': group})
     else:
-        return redirect(reverse('s_classes_join', args = (group_pk)))
+        return redirect(reverse('student:classes_join', args = (group_pk)))
 
 @login_required
 @user_passes_test(is_student, login_url = NON_STUDENT_LOGIN, redirect_field_name = None)
@@ -96,7 +96,7 @@ def study_start(request, group_pk, deck_pk):
     deck = Deck.objects.get(pk = deck_pk)
     deadline_passed = GroupDeck.objects.filter(group = group, deck = deck, deadline__lt = datetime.now)
     if deadline_passed:
-        return redirect(reverse('s_study_intro', args = (group.pk, deck.pk)))
+        return redirect(reverse('student:study_intro', args = (group.pk, deck.pk)))
     card_pk = request.POST.get('card_pk')
     show_answer = request.POST.get('show_answer')
     if show_answer == 'y':

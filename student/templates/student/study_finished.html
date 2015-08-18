@@ -1,10 +1,16 @@
 {% extends 'ebbings/base.html' %}
 
 {% block content %}
-<h1>{{deck.name}}</h1>
-<p>Current time: {{now}} (UTC)</p>
-<h2>All cards finished!</h2>
-<br><br>
-<a href="{% url 's_classes' %}">Classes</a>
-<a href="{% url 'index' %}">Home page</a>
+<div class="container">
+  <div class="page-header">
+    <h1>{{deck.name}}</h1>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">Current time: {{now}} (UTC)</div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-12"><h3>All cards finished!</h3></div>
+  </div>
+</div>
 {% endblock %}

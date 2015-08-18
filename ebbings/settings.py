@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/1.8/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
@@ -67,6 +66,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'ebbings.contexts.appname',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'ebbings.wsgi.application'
 
 # Auth
 
-LOGIN_REDIRECT_URL = '/users/login/success/'
+LOGIN_REDIRECT_URL = '/users/login_success/'
 
 LOGIN_URL = '/users/login/'
 

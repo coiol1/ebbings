@@ -1,8 +1,12 @@
 {% extends 'ebbings/base.html' %}
 
 {% block content %}
-<h1>Student home page</h1>
-
-<a href="{% url 's_classes' %}">Classes</a>
-<a href="{% url 'index' %}">Home page</a>
+<div class="container">
+  <div class="page-header">
+    <h1>Students homepage</h1>
+  </div>
+  <div class="row">
+    <div class="col-xs-12"><a href="{% url 'student:classes' %}">View your classes</a></div>
+  </div>
+</div>
 {% endblock %}

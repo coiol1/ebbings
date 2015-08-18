@@ -1,9 +1,30 @@
 {% extends 'ebbings/base.html' %}
 
 {% block content %}
-<h1>Home page</h1>
-
-<a href="{% url 't_index' %}">Teacher</a>
-<a href="{% url 's_index' %}">Student</a>
-<a href="{% url 'u_index' %}">Users</a>
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+  <div class="container">
+    <h1>Ebbings</h1>
+    <p>Named after the German psychologist and pioneer of memory research, Hermann Ebbinghaus (1850-1909), Ebbings helps you learn and retain information more efficiently than traditional methods.</p>
+  </div>
+</div>
+<div class="container">
+  <!-- Example row of columns -->
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Teachers</h2>
+      <p>Use Ebbings to assign decks of information for your students to learn. There are several pre-made decks for English language learning (for native language Chinese students), and other decks can be requested. You can easily keep track of your students' progress.</p>
+      <p><a class="btn btn-default" href="{% url 'teacher:index' %}" role="button">Click here &raquo;</a></p>
+    </div>
+    <div class="col-md-6">
+      <h2>Students</h2>
+      <p>Study the decks assigned to you by your teacher. Try to study for a few minutes each time in short, frequent bursts in order to maximize benefits.</p>
+      <p><a class="btn btn-default" href="{% url 'student:index' %}" role="button">Click here &raquo;</a></p>
+   </div>
+  </div>
+  <hr>
+  <footer>
+    <p>&copy; Glenn M. Davis 2015</p>
+  </footer>
+</div> <!-- /container -->
 {% endblock %}
