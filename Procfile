@@ -1,0 +1,1 @@
+web: gunicorn ebbings.wsgi --log-file -
