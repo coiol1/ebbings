@@ -3,3 +3,5 @@
 500ielts.*
 *.txt
 deck_creation_scripts.py
+venv
+*.pyc
