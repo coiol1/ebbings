@@ -1,9 +1,15 @@
 {% extends 'ebbings/base.html' %}
 
 {% block content %}
-<h1>Decks review page</h1>
+<div class="container">
+  <div class="page-header">
+    <h1>Decks review page</h1>
+  </div>
 
-{% for deck in decks %}
-    <a href="{% url 'teacher:decks_review_one' deck.pk %}">{{deck.name}}</a><br>
-{% endfor %}
+  {% for deck in decks %}
+  <div class="row">
+    <div class="col-xs-12"><a href="{% url 'teacher:decks_review_one' deck.pk %}">{{deck.name}}</a></div>
+  </div>
+  {% endfor %}
+
 {% endblock %}

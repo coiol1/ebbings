@@ -1,5 +1,14 @@
 {% extends 'ebbings/base.html' %}
 
 {% block content %}
-<h1>New class created</h1>
+<div class="container">
+  <div class="page-header">
+    <h1>New class created</h1>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <a href="{% url 'teacher:classes' %}">Return to classes homepage</a>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -38,21 +38,45 @@ function validateForm() {
 {% endblock %}
 
 {% block content %}
-<h1>Create a new class</h1>
-
-<form action="{% url 'teacher:classes_new_create' %}" onsubmit="return validateForm()" method="POST">
+<div class="container">
+  <div class="page-header">
+    <h1>Create a new class</h1>
+  </div>
+  <form action="{% url 'teacher:classes_new_create' %}" onsubmit="return validateForm()" method="POST">
     {% csrf_token %}
-    Provide a name for this class:
-    <input type="text" name="title" required>
-    <br>
+    <div class="row"> 
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label class="control-label">Provide a name for this class:</label>
+          <input type="text" class="form-control" name="title" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 form-group">
+        <h5><em>Select decks to assign to this class. Total weighting must add up to 100%.</em></h5>
+      </div>
+    </div>
+
     {% for deck in decks %}
+    <div class="row">
+      <div class="col-xs-12 col-md-4 form-group">
         <input type="checkbox" class="check" name="deck" value="{{deck.pk}}">{{deck.name}}
-        Deadline:
+      </div>
+      <div class="col-xs-12 col-md-4 form-group">
+        <label>Deadline:</label>
         <input type="datetime-local" class="deadline" name="deadline{{deck.pk}}"> <!-- sends time-zone-unaware datetime to the POST -->
-        Weighting %:
+      </div>
+      <div class="col-xs-12 col-md-4 form-group">
+        <label>Weighting %:</label>
         <input type="number" class="weight" name="weight{{deck.pk}}" min="1" max="100" step="1">
-        <br>
+      </div>
+    </div>
     {% endfor %}
-    <input type="submit" value="Submit">
-</form>
+
+    <div class="form-group">
+      <input type="submit" class="btn btn-primary" value="Submit">
+    </div>
+  </form>
+</div>
 {% endblock %}

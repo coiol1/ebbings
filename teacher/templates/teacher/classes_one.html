@@ -1,33 +1,44 @@
 {% extends 'ebbings/base.html' %}
 
 {% block content %}
-<h1>{{group.name}}</h1>
-<p>
+<div class="container">
+  <div class="page-header">
+    <h1>{{group.name}}</h1>
+  </div>
+
 {% for groupdeck in groupdecks %}
-    <strong>Deck {{forloop.counter}}</strong>: <em>{{groupdeck.deck.name}}</em>, Deadline: {{groupdeck.deadline}}, Weight: {{groupdeck.weight}}%<br>
+  <div class="row">
+    <div class="col-xs-12 col-sm-4"><strong>Deck {{forloop.counter}}</strong>: <em>{{groupdeck.deck.name}}</em></div>
+    <div class="col-xs-12 col-sm-4">Deadline: {{groupdeck.deadline}}</div>
+    <div class="col-xs-12 col-sm-4">Weight: {{groupdeck.weight}}%</div>
+  </div>
 {% endfor %}
-</p>
-<table style="width: 100%">
-    <tr>
-        <th>Student #</th>
-        <th>Name</th>
-        <th>Username</th>
-        <th>Email</th>
-        {% for groupdeck in groupdecks %}
-            <th>Deck {{forloop.counter}}</th>
-        {% endfor %}
-        <th>Total score</th>
-    </tr>
-    {% for student in students %}
-    <tr>
-        <td>{{student.1}}</td>
-        <td>{{student.0.first_name}} {{student.0.last_name}}</td>
-        <td>{{student.0.username}}</td>
-        <td>{{student.0.email}}</td>
-        {% for item in student|slice:"2:" %}
-            <td>{{item}}%</td>
-        {% endfor %}
-    </tr>
-    {% endfor %}
-</table>
+
+  <hr>
+  <table class="table table-striped table-responsive">
+      <tr>
+          <th>Student #</th>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Email</th>
+          {% for groupdeck in groupdecks %}
+              <th>Deck {{forloop.counter}}</th>
+          {% endfor %}
+          <th>Total score</th>
+      </tr>
+
+      {% for student in students %}
+      <tr>
+          <td>{{student.1}}</td>
+          <td>{{student.0.first_name}} {{student.0.last_name}}</td>
+          <td>{{student.0.username}}</td>
+          <td><a href="mailto:{{student.0.email}}">{{student.0.email}}</a></td>
+          {% for item in student|slice:"2:" %}
+              <td>{{item}}%</td>
+          {% endfor %}
+      </tr>
+      {% endfor %}
+      
+  </table>
+</div>
 {% endblock %}

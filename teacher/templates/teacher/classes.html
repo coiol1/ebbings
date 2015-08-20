@@ -1,18 +1,51 @@
 {% extends 'ebbings/base.html' %}
 
 {% block content %}
-<h1>Classes home page</h1>
+<div class="container">
+  <div class="page-header">
+    <h1>Classes home page</h1>
+  </div>
 
 {% for group in teacher_groups %}
-    <p><strong>{{group.name}}</strong><ul>
-    {% for deck in group.associated_decks %}
-        <li>{{deck.0}} <em>Deadline:</em> {{deck.1}} <em>Weight:</em> {{deck.2}}% <a href="{% url 'teacher:decks_review_one' deck.3 %}">Review deck</a></li>
-    {% endfor %}
-    </ul>
-    <a href="{% url 'teacher:classes_one' group.pk %}">View student progress</a><br>
-    Students can join {{group.name}} by going to <a href="{% url 'student:classes_join' group.pk %}">this URL</a>
-    </p>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4><strong>{{group.name}}</strong></h4>
+    </div>
+  </div>
+
+  {% for deck in group.associated_decks %}
+  <div class="row">
+    <div class="col-xs-6 col-sm-4">
+      {{deck.0}}
+    </div>
+    <div class="col-xs-6 col-sm-4">
+      <em>Deadline:</em> {{deck.1}}
+    </div>
+    <div class="col-xs-6 col-sm-2">
+      <em>Weight:</em> {{deck.2}}% 
+    </div>
+    <div class="col-xs-6 col-sm-2">
+      <a href="{% url 'teacher:decks_review_one' deck.3 %}">Review deck</a>
+    </div>
+  </div></li>
+  <br>
+  {% endfor %}
+  
+  <div class="row">
+    <div class="col-xs-12 col-sm-4">
+      <a href="{% url 'teacher:classes_one' group.pk %}">View student progress</a>
+    </div>
+    <div class="col-xs-12 col-sm-8">
+      <p>Your students can join <strong>{{group.name}}</strong> by going to <a href="{% url 'student:classes_join' group.pk %}">this URL</a> (requires student account)</p>
+    </div>
+  </div>
+  <hr>
 {% endfor %}
 
-<a href="{% url 'teacher:classes_new' %}">Create a new class</a>
+  <div class="row">
+    <div class="col-xs-12">
+      <a href="{% url 'teacher:classes_new' %}">Create a new class</a>
+    </div>
+  </div>    
+</div>
 {% endblock %}

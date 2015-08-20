@@ -1,20 +1,30 @@
 {% extends 'ebbings/base.html' %}
 
 {% block content %}
-<h1>{{deck_name}}</h1>
+<div class="container">
+  <div class="page-header">
+    <h1>{{deck_name}}</h1>
+  </div>
 
-{% for card in cards %}
-    <p><strong>{{card.front}}</strong>
-    {% if card.front_additional %}
+  {% for card in cards %}
+   <div class="row"> 
+    <div class="col-xs-12">
+      <strong>{{card.front}}</strong>
+      {% if card.front_additional %}
         {{card.front_additional}}
-    {% endif %}
-    {{card.back}}
-    {% if card.back_additional %}
+      {% endif %}
+    </div>
+    <div class="col-xs-12">
+      {{card.back}}
+      {% if card.back_additional %}
         {{card.back_additional}}
-    {% endif %}
+      {% endif %}
+    </div>
     {% if card.example %}
-    <em>{{card.example}}</em>
+    <div class="col-xs-12"><em>{{card.example}}</em></div>
     {% endif %}
-    </p>
-{% endfor %}
+  </div>
+  <br>
+  {% endfor %}
+
 {% endblock %}
