@@ -13,7 +13,7 @@ function validateForm() {
                 alert("Username already exists");
             }
             if (jsonresponse.username_exists === false) {
-                document.register_teacher.submit();
+                document.register_student.submit();
             }
         }
     });
@@ -23,24 +23,39 @@ function validateForm() {
 {% endblock %}
 
 {% block content %}
-<h1>Users registration page</h1>
-
-<form action="{% url 'users:register_student_success' %}" name="register_student" onsubmit="return validateForm()" method="POST">
+<div class="container">
+  <div class="page-header">
+    <h1>Student registration page</h1>
+  </div>
+  <form action="{% url 'users:register_student_success' %}" name="register_student" onsubmit="return validateForm()" method="POST">
     {% csrf_token %}
-    <h2>
-        First name
-        <input type='text' name='first_name' required><br>
-        Last name
-        <input type='text' name='last_name' required><br>
-        Student number
-        <input type='text' name='student_id' required><br>
-        Email address
-        <input type='email' name='email' required><br>
-        Username
-        <input type='text' id='username' name='username' required><br>
-        Password
-        <input type='password' name='password' required><br>
-        <input type='submit' name='button' value='Create new user'>
-    </h2>
-</form>
+    <div class="form-group">
+      <label>First name</label>
+      <input type='text' class="form-control" name='first_name' required>
+    </div>
+    <div class="form-group">
+      <label>Last name</label>
+      <input type='text' class="form-control" name='last_name' required>
+    </div>
+    <div class="form-group">
+      <label>Student number</label>
+      <input type='text' class="form-control" name='student_id' required>
+    </div>
+    <div class="form-group">
+      <label>Email address</label>
+      <input type='email' class="form-control" name='email' required>
+    </div>
+    <div class="form-group">
+      <label>Username</label>
+      <input type='text' class="form-control" id='username' name='username' required>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type='password' class="form-control" name='password' required>
+    </div>
+    <div class="form-group">
+      <input type='submit' class="btn btn-primary" name='button' value='Create new user'>
+    </div>
+  </form>
+</div>
 {% endblock %}
