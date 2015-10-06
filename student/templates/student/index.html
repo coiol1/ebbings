@@ -6,7 +6,13 @@
     <h1>Students homepage</h1>
   </div>
   <div class="row">
-    <div class="col-xs-12"><a href="{% url 'student:classes' %}">View your classes</a></div>
+    <div class="col-xs-12">Welcome to Ebbings. This website uses techniques from memory research to help you learn and remember information more efficiently. To get started, join a class below. If you're using Ebbings as part of a class, your teacher may have already given you instructions about which class to join.</div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-4"><a href="{% url 'student:classes_list' %}">Join a class</a></div>
+    <div class="col-xs-4"><a href="{% url 'student:classes' %}">View your classes</a></div>
+    <div class="col-xs-4"><a href="{% url 'student:learnmore' %}">Learn more about Ebbings</a></div>
   </div>
 </div>
 {% endblock %}

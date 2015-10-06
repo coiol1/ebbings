@@ -41,11 +41,21 @@ def index(request):
 
 @login_required
 @user_passes_test(is_student, login_url = NON_STUDENT_LOGIN, redirect_field_name = None)
+def learnmore(request):
+    return render(request, 'student/learnmore.html', {})
+
+@login_required
+@user_passes_test(is_student, login_url = NON_STUDENT_LOGIN, redirect_field_name = None)
 def classes(request):
     student_groups = []
     for usergroup in UserGroup.objects.filter(user = request.user, role = '2'):
         student_groups.append(usergroup.group) #gets the classes (groups) with the user as student (role 2)
     return render(request, 'student/classes.html', {'student_groups': student_groups})
+
+@login_required
+@user_passes_test(is_student, login_url = NON_STUDENT_LOGIN, redirect_field_name = None)
+def classes_list(request):
+    return render(request, 'student/classes_list.html', {})
 
 @login_required
 @user_passes_test(is_student, login_url = NON_STUDENT_LOGIN, redirect_field_name = None)
@@ -105,5 +115,5 @@ def study_start(request, group_pk, deck_pk):
     answered = request.POST.get('answered')
     if answered:
         answer_card(StudentCard.objects.get(pk = card_pk), int(answered))
-    due_card = StudentCard.objects.filter(user = request.user, deck = deck, due__lt = datetime.now).first()
+    due_card = random.choice(StudentCard.objects.filter(user = request.user, deck = deck, due__lt = datetime.now))
     return render(request, 'student/study_question.html', {'deck': deck, 'group': group, 'now': datetime.now, 'due_card': due_card})

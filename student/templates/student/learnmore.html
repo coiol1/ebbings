@@ -1,0 +1,32 @@
+{% extends 'ebbings/base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1>About Ebbings</h1>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">Ebbings uses techniques from memory research to improve the efficiency of learning and remembering new information.</div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-12">The first technique is called <strong><em>spaced repetition</em></strong>. Research has shown that studying the same easy items over and over again does little to help memory, and instead time should be spent studying items that are more difficult to remember. This has been known for decades, but systems to separate easy and difficult items were cumbersome and awkward to use. Ebbings makes this task simple by showing you difficult words more frequently and easy words less often.</div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-12">When you answer an item correctly, the due date for when the item will be shown again is pushed further into the future. When you answer an item incorrectly, the due date is pulled back closer to the present. Ebbings considers any items with a due date of more than one month from the present date as "acquired" in long-term memory.</div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-12">The second technique is called <strong><em>retrieval practice</em></strong>. It is much easier to recognize the answer when given a list of possible choices, but studies have shown that memory is stronger when no choices are given and the answer must be completely retrieved from memory. When using Ebbings, try to think of the correct answer <em>before</em> clicking to show the answer. This will help to build retrieval pathways in your brain and will allow you to use the information in real-life situations more effectively.</div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-12"><strong>Note for students:</strong><br>Ebbings keeps track of what items you've learned and reports this information to your teacher. As you use Ebbings, due dates for each item will be pushed further and further forward in time. Any items with a due date more than one month from the current time are considered "acquired". Your teacher may use the percentage of items acquired to determine your grade.</div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-12"><a href="{% url 'student:index' %}">Return to student homepage</a></div>
+  </div>
+</div>
+{% endblock %}

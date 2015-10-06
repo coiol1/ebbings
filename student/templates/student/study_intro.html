@@ -21,6 +21,10 @@
   <div class="row">
     <div class="col-xs-12"><a class="btn btn-primary btn-lg" href="{% url 'student:study_start' group.pk deck.pk %}">Start studying!</a></div>
   </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-12">To use Ebbings effectively, try to think of the answer in your head before clicking to reveal the answer. This technique is called <em>retrieval practice</em>, and studies have shown it to be a better way to learn.</div>
+  </div>
   {% endif %}
 </div>
 {% endblock %}
