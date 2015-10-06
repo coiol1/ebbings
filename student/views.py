@@ -54,8 +54,19 @@ def classes(request):
 
 @login_required
 @user_passes_test(is_student, login_url = NON_STUDENT_LOGIN, redirect_field_name = None)
-def classes_list(request):
-    return render(request, 'student/classes_list.html', {})
+def classes_teachers(request):
+    teachers = sorted(UserProfile.objects.exclude(teacher_id = ''), key = lambda x: x.user.last_name)
+    return render(request, 'student/classes_teachers.html', {'teachers': teachers})
+
+@login_required
+@user_passes_test(is_student, login_url = NON_STUDENT_LOGIN, redirect_field_name = None)
+def classes_teachers_list(request, teacher_pk):
+    teacher_user = User.objects.get(pk = teacher_pk)
+    teacher_userprofile = UserProfile.objects.get(user = teacher_user)
+    teacher_groups = []
+    for usergroup in UserGroup.objects.filter(user = teacher_user, role = '1'):
+        teacher_groups.append(usergroup.group)
+    return render(request, 'student/classes_teachers_list.html', {'teacher_user': teacher_user, 'teacher_userprofile': teacher_userprofile, 'teacher_groups': teacher_groups})
 
 @login_required
 @user_passes_test(is_student, login_url = NON_STUDENT_LOGIN, redirect_field_name = None)

@@ -7,12 +7,12 @@
   </div>
   <div class="row">
     <div class="col-xs-4">Current time: {{now}} (UTC)</div>
-    <div class="col-xs-4">{{num_acquired_cards}} out of {{num_total_cards}} acquired ({{percent_acquired}}%)</div>
+    <div class="col-xs-4">{{num_acquired_cards}} out of {{num_total_cards}} <abbr title="Cards with a due date of at least one month ahead of the current time">acquired</abbr> ({{percent_acquired}}%)</div>
     <div class="col-xs-4">
       {% if deadline_passed %}
       Deadline passed! You can no longer study this deck.
       {% else %}
-      {{num_due_cards}} cards due
+      {{num_due_cards}} cards <abbr title="Cards with a due date before the current time">due</abbr>
       {% endif %}
     </div>
   </div>

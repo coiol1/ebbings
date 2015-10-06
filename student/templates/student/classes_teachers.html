@@ -1,0 +1,18 @@
+{% extends 'ebbings/base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1>Join a class</h1>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">Select the teacher whose class you want to join.</div>
+  </div>
+  <br>
+  <div class="row">
+  {% for teacher in teachers %}
+    <div class="col-xs-12 col-sm-6"><a href="{% url 'student:classes_teachers_list' teacher.user.pk %}"><strong>{{teacher.user.first_name}} {{teacher.user.last_name}}</strong> (Teacher ID: {{teacher.teacher_id}})</a></div>
+  {% endfor %}
+  </div>
+</div>
+{% endblock %}

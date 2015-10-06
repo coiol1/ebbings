@@ -1,0 +1,35 @@
+{% extends 'ebbings/base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1>{{teacher_user.first_name}} {{teacher_user.last_name}} ({{teacher_userprofile.teacher_id}})</h1>
+  </div>
+  {% if teacher_groups %}
+    {% for group in teacher_groups %}
+    <div class="row">
+      <div class="col-xs-12">
+        <h4><strong><a href="{% url 'student:classes_join' group.pk %}">{{group.name}}</a></strong></h4>
+      </div>
+    </div>
+      {% for deck in group.associated_decks %}
+      <div class="row">
+        <div class="col-xs-12 col-sm-4">
+          {{deck.0}}
+        </div>
+        <div class="col-xs-7 col-sm-4">
+          <em>Deadline:</em> {{deck.1}}
+        </div>
+        <div class="col-xs-5 col-sm-4">
+          <em>Weight:</em> {{deck.2}}% 
+        </div>
+      </div></li>
+      {% endfor %}
+    {% endfor %}
+  {% else %}
+    <div class="row">
+      <div class="col-xs-12">No classes available.</div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
