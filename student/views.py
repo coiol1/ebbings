@@ -126,5 +126,8 @@ def study_start(request, group_pk, deck_pk):
     answered = request.POST.get('answered')
     if answered:
         answer_card(StudentCard.objects.get(pk = card_pk), int(answered))
-    due_card = random.choice(StudentCard.objects.filter(user = request.user, deck = deck, due__lt = datetime.now))
+    try:
+        due_card = random.choice(StudentCard.objects.filter(user = request.user, deck = deck, due__lt = datetime.now))
+    except:
+        due_card = None
     return render(request, 'student/study_question.html', {'deck': deck, 'group': group, 'now': datetime.now, 'due_card': due_card})
